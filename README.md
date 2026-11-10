@@ -1,13 +1,188 @@
-# Team Project
+# My Digital Bookshelf
 
-Please keep this up-to-date with information about your project throughout the term.
+## Team Information
 
-The readme should include information such as:
-- a summary of what your application is all about
-- a list of the user stories, along with who is responsible for each one
-- information about the API(s) that your project uses 
-- screenshots or animations demonstrating current functionality
+### Team Members
+- Allison Au
+- Evana Lai
+- Wineta Pangestu
+- Annie Song
+- Lanqing Liu
 
-By keeping this README up-to-date,
-your team will find it easier to prepare for the final presentation
-at the end of the term.
+---
+## Project Description
+
+### Domain: Organization
+
+BookShelf is a personal book-tracking and library management application that allows users to discover, review, and organize books they have read.
+
+Using the Open Library API, users can search for books by title and view information about different books, including their title, author, publication year, and cover image. Users can select books to add to their personal bookshelf, assign ratings, and write reviews or comments to record their reading experiences.
+
+The application provides a visual representation of the user's bookshelf, allowing them to browse their collection and sort books by different attributes such as title, author, rating, genre, and date added. Users can also manually rearrange the order of books to personalize their bookshelf.
+
+The goal of BookShelf is to provide users with an interactive and customizable space to document and organize their reading experiences.
+
+---
+
+## User Stories
+
+### User Story 1: Search and Add Books
+
+As a user, I want to search for books by title and view their details so that I can discover books and add them to my personal bookshelf.
+
+### User Story 2: Rate and Review Books
+
+As a user, I want to rate books and write reviews or comments so that I can record and reflect on my reading experiences.
+
+### User Story 3: Manage My Bookshelf
+
+As a user, I want to add and remove books from my personal bookshelf so that I can maintain a collection of books I have read.
+
+### User Story 4: View and Organize Bookshelf
+
+As a user, I want to view my personal bookshelf in a visual layout and sort my books by different attributes so that I can easily browse and organize my collection.
+
+### User Story 5: Customize Bookshelf
+
+As a user, I want to rearrange the order of books on my bookshelf so that I can personalize its appearance according to my preferences.
+
+---
+
+## Use Cases
+
+### Use Case 1: Search and Add Books
+
+- User enters a book title into the search bar.
+- System sends a search request to the Open Library API.
+- System displays matching books and their available information.
+- User selects a book to view its details.
+- User chooses to add the book to their personal bookshelf.
+- System saves the book to the user's library and prevents duplicate entries.
+
+### Use Case 2: Rate and Review Books
+
+- User selects a book from their bookshelf.
+- User assigns a numerical rating (e.g., 1–5 stars).
+- User writes a review or comment.
+- System saves the rating and review alongside the book.
+- User can view their existing rating and review.
+
+### Use Case 3: Manage My Bookshelf
+
+- User navigates to their personal bookshelf.
+- User can view their saved books.
+- User selects a book they want to remove.
+- User chooses the remove option.
+- System removes the selected book from their bookshelf.
+
+### Use Case 4: View and Organize Bookshelf
+
+- User navigates to their bookshelf.
+- System retrieves the user's saved books.
+- System displays the books in a visual bookshelf layout, including their cover images.
+- User selects a sorting option.
+- Available sorting options include:
+    - Title (alphabetical order)
+    - Author (alphabetical order)
+    - Rating (highest to lowest or lowest to highest)
+    - Genre
+    - Date added (most recent first or oldest first)
+- System rearranges the displayed books according to the selected criteria.
+
+### Use Case 5: Customize Bookshelf
+
+- User selects a book they want to reposition.
+- User moves the book to a different position in their bookshelf.
+- System saves the custom ordering.
+- Books are displayed in the user's preferred order.
+
+---
+
+## Minimal Viable Product (MVP)
+
+The MVP will focus on implementing the essential functionality needed for users to discover books, maintain a personal library, and document their reading experiences.
+
+| Team Member | MVP Use Case |
+|-------------|--------------|
+| Lanqing | Search for books using the Open Library API |
+| Name | View book details and retrieve book cover images |
+| Name | Add and remove books from the personal bookshelf |
+| Name | Rate and review books |
+| Annie | Display the bookshelf and implement sorting by title, author, and rating |
+| Name | Manage bookshelf data and integrate the application's functionality |
+
+**Post-MVP Features:**
+- Sorting by genre and date added.
+- Custom bookshelf ordering through drag-and-drop functionality.
+- Additional visual bookshelf customization.
+
+---
+
+## Entities
+
+### Book
+- Book ID
+- Title
+- Author
+- ISBN
+- Genre
+- Publication Year
+- Cover Image
+- Open Library ID
+- Date Added
+
+### User
+- User ID
+- Personal Bookshelf (collection of books)
+
+### Review
+- Review ID
+- Book ID
+- Rating
+- Comment
+
+---
+
+## API Usage
+
+**API Name:** Open Library API
+
+**Documentation:** https://openlibrary.org/developers/api
+
+**How it is used in the program:**
+
+The Open Library API will be used to search for books and retrieve relevant book information.
+
+- The Search API will retrieve books matching the user's search query.
+- Book metadata will be used to display information such as title, author, publication year, and ISBN.
+- The Covers API will be used to retrieve book cover images.
+- Retrieved book information will be stored locally in the application's database alongside user-generated ratings and reviews.
+
+---
+
+## Design Diagrams
+
+### UML Class Diagram
+
+(To be added)
+
+### Sequence Diagrams
+
+(To be added)
+
+---
+
+## How to Run
+
+(To be added once the development environment, dependencies, and setup instructions have been finalized.)
+
+---
+
+## Notes
+
+- Open Library will serve as the external source for book information.
+- User-generated information, including ratings and reviews, will be stored within the application.
+- Each book should have a unique identifier (preferably its Open Library Work ID or edition ID) to prevent duplicate entries.
+- The personal bookshelf will contain only books the user has read.
+- Each book can have one associated rating and review.
+- Custom bookshelf ordering will be considered a post-MVP feature.
