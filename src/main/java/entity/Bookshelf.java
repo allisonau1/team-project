@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Represents a user's personal bookshelf, which maintains a collection
@@ -9,14 +9,15 @@ import java.util.ArrayList;
  * The bookshelf provides functionality to retrieve, add, and remove
  * books from the user's collection.
  */
-public class BookShelf {
-    private ArrayList<Book> books;
+public class Bookshelf{
+
+    private final ArrayList<Book> books;
 
     /**
      * Constructs an empty bookshelf.
      */
     public Bookshelf(){
-        this.book = new ArrayList<Book>();
+        this.books = new ArrayList<>();
     }
 
     /**
@@ -33,7 +34,7 @@ public class BookShelf {
      *
      * @param book the book to be added to the bookshelf
      **/
-    public addBook(Book book){
+    public void addBook(Book book){
 
     }
 
@@ -42,7 +43,16 @@ public class BookShelf {
      *
      * @param book the book to be removed from the bookshelf
      */
-    public removeBook(Book book){
+    public void removeBook(Book book){
+
+    }
+
+    /**
+     * Sorts bookshelf by a comparator.
+     *
+     * @param compareBy the comparator to be sorted by
+     */
+    public void sortBooks(Comparator compareBy){
 
     }
 
