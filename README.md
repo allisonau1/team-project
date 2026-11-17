@@ -101,11 +101,10 @@ The MVP will focus on implementing the essential functionality needed for users 
 |-------------|--------------|
 | Lanqing | Search for books using the Open Library API |
 | Lanqing| View book details and retrieve book cover images |
-| Allison | Add boioks to the personal bookshelf |
+| Allison | Add books to the personal bookshelf |
 | Wineta | Remove books from the personal bookshelf|
 | Evana | Rate and review books |
 | Annie | Display the bookshelf and implement sorting by title, author, and rating |
-| Wineta | Manage bookshelf data and integrate the application's functionality |
 
 **Post-MVP Features:**
 - Sorting by genre and date added.
@@ -121,14 +120,11 @@ The MVP will focus on implementing the essential functionality needed for users 
 - Title
 - Author
 - ISBN
-- Genre
-- Publication Year
 - Cover Image
 - Open Library ID
 - Date Added
 
 ### User
-- User ID
 - Personal Bookshelf (collection of books)
 
 ### Review
@@ -137,6 +133,8 @@ The MVP will focus on implementing the essential functionality needed for users 
 - Rating
 - Comment
 
+### Bookshelf
+- Books
 ---
 
 ## API Usage
