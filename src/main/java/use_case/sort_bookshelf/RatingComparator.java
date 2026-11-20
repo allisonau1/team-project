@@ -1,4 +1,11 @@
 package use_case.sort_bookshelf;
 
-public class RatingComparator {
+import entity.Book;
+import java.util.Comparator;
+
+public class RatingComparator implements Comparator<Book> {
+    @Override
+    public int compare(Book book1, Book book2) {
+
+    }
 }
