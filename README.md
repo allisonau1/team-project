@@ -18,7 +18,7 @@ BookShelf is a personal book-tracking and library management application that al
 
 Using the Open Library API, users can search for books by title and view information about different books, including their title, author, publication year, and cover image. Users can select books to add to their personal bookshelf, assign ratings, and write reviews or comments to record their reading experiences.
 
-The application provides a visual representation of the user's bookshelf, allowing them to browse their collection and sort books by different attributes such as title, author, rating, genre, and date added. Users can also manually rearrange the order of books to personalize their bookshelf.
+The application provides a visual representation of the user's bookshelf, allowing them to browse their collection and sort books by different attributes such as title, author, rating, and date added. Users can also manually rearrange the order of books to personalize their bookshelf.
 
 The goal of BookShelf is to provide users with an interactive and customizable space to document and organize their reading experiences.
 
@@ -86,7 +86,6 @@ As a user, I want to view my personal bookshelf in a visual layout and sort my b
   - Title (alphabetical order)
   - Author (alphabetical order)
   - Rating (highest to lowest or lowest to highest)
-  - Genre
   - Date added (most recent first or oldest first)
 - System rearranges the displayed books according to the selected criteria.
 
@@ -101,14 +100,14 @@ The MVP will focus on implementing the essential functionality needed for users 
 |-------------|--------------|
 | Lanqing | Search for books using the Open Library API |
 | Lanqing| View book details and retrieve book cover images |
-| Allison | Add boioks to the personal bookshelf |
+| Allison | Add books to the personal bookshelf |
 | Wineta | Remove books from the personal bookshelf|
 | Evana | Rate and review books |
 | Annie | Display the bookshelf and implement sorting by title, author, and rating |
 | Wineta | Manage bookshelf data and integrate the application's functionality |
 
 **Post-MVP Features:**
-- Sorting by genre and date added.
+- Sorting by date added.
 - Custom bookshelf ordering through drag-and-drop functionality.
 - Additional visual bookshelf customization.
 
@@ -121,7 +120,6 @@ The MVP will focus on implementing the essential functionality needed for users 
 - Title
 - Author
 - ISBN
-- Genre
 - Publication Year
 - Cover Image
 - Open Library ID
@@ -160,7 +158,7 @@ The Open Library API will be used to search for books and retrieve relevant book
 
 ### UML Class Diagram
 
-![UML Diagram.png](docs/UML%20Diagram.png)
+![UML Diagram updated.png](docs/UML%20Diagram%20updated.png)
 
 ### Sequence Diagrams
 
