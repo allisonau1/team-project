@@ -6,16 +6,25 @@ import java.util.Comparator;
 public class DateAddedComparator implements Comparator<Book> {
 
     private final TitleComparator titleComparator = new TitleComparator();
+    private final boolean mostRecentFirst;
+
+    public DateAddedComparator(boolean mostRecentFirst) {
+        this.mostRecentFirst = mostRecentFirst;
+    }
 
     @Override
     public int compare(Book book1, Book book2) {
-        if (book1.getDateAdded().isAfter(book2.getDateAdded())) {
-            return -1;
-        } else if (book1.getDateAdded().isBefore(book2.getDateAdded())) {
-            return 1;
+        int dateOrder;
+        if (mostRecentFirst) {
+            dateOrder = book2.getDateAdded().compareTo(book1.getDateAdded());
         } else {
-            // Ties are handled by title
-            return titleComparator.compare(book1, book2);
+            dateOrder = book1.getDateAdded().compareTo(book2.getDateAdded());
         }
+
+        // Ties broken by title
+        if (dateOrder != 0) {
+            return dateOrder;
+        }
+        return titleComparator.compare(book1, book2);
     }
 }
