@@ -1,78 +1,135 @@
 @startuml
 skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
 
-class Bookshelf {
-  - books : List<Book>
-  + Bookshelf()
-  + getBooks() : List<Book>
-  + addBook(book : Book) : void
-  + removeBook(book : Book) : void
-  + sortBooks(comparator : Comparator<Book>) : void
+package entity {
+  class Bookshelf {
+    - books : ArrayList<Book>
+    + Bookshelf()
+    + getBooks() : ArrayList<Book>
+    + addBook(book : Book) : void
+    + removeBook(book : Book) : void
+    + sortBooks(comparator : Comparator<Book>) : void
+  }
+
+  class Book {
+    - openLibraryId : String
+    - title : String
+    - author : String
+    - isbn : String
+    - publicationYear : Integer
+    - coverID : Integer
+    - dateAdded : LocalDateTime
+    - shelved : boolean
+    - review : Review
+    + Book(openLibraryId : String, title : String, author : String,
+    publicationYear : Integer, isbn : String, coverID : Integer)
+    + getOpenLibraryId() : String
+    + getTitle() : String
+    + getAuthor() : String
+    + getIsbn() : String
+    + getPublicationYear() : Integer
+    + getCoverID() : Integer
+    + getDateAdded() : LocalDateTime
+    + setDateAdded(dateAdded : LocalDateTime) : void
+    + isShelved() : boolean
+    + setShelved(shelved : boolean) : void
+    + getReview() : Review
+    + setReview(review : Review) : void
+    + toString() : String
+    + equals(obj : Object) : boolean
+  }
+
+  class BookFactory {
+    + create(openLibraryId : String, title : String, author : String,
+    publicationYear : Integer, isbn : String, coverID : Integer) : Book
+  }
+
+  class Review {
+    + {static} MIN_RATING : int = 0
+    + {static} MAX_RATING : int = 5
+    - openLibraryID : String
+    - rating : Integer
+    - review : String
+    + Review(openLibraryID : String, rating : Integer, review : String)
+    + getRating() : Integer
+    + getReview() : String
+  }
+
+  interface "Comparator<Book>" as Comparator {
+    + compare(a : Book, b : Book) : int
+  }
+
+  class AuthorComparator {
+    + compare(a : Book, b : Book) : int
+  }
+
+  class DateAddedComparator {
+    + compare(a : Book, b : Book) : int
+  }
+
+  class RatingComparator {
+    + compare(a : Book, b : Book) : int
+  }
+
+  class TitleComparator {
+    + compare(a : Book, b : Book) : int
+  }
 }
 
-class Book {
-  - openLibraryId : String
-  - title : String
-  - author : String
-  - isbn : String
-  - genre : String
-  - publicationYear : Integer
-  - coverID : Integer
-  - dateAdded : LocalDateTime
-  - shelved : boolean
-  - review : Review
-  + Book(openLibraryId : String, title : String, author : String, publicationYear : Integer,
-  isbn : String, genre : String, coverID : Integer, dateAdded : LocalDateTime)
-  + getOpenLibraryId() : String
-  + getTitle() : String
-  + getAuthor() : String
-  + getIsbn() : String
-  + getPublicationYear() : Integer
-  + getGenre() : String
-  + getDateAdded() : LocalDateTime
-  + isShelved() : boolean
-  + setShelved(shelved : boolean) : void
-  + getReview() : Review
-  + setReview(review : Review) : void
-  + toString() : String
+package use_case {
+  interface BookshelfDataAccessInterface {
+    + getBookshelf() : Bookshelf
+    + existsOnBookshelf(book : Book) : boolean
+    + saveBookshelf(bookshelf : Bookshelf) : void
+  }
+
+  interface RemoveBookDataAccessInterface {
+    + getBook(openLibraryId : String) : Book
+    + getBookshelf() : Bookshelf
+    + saveBookshelf(bookshelf : Bookshelf) : void
+  }
+
+  interface RateReviewDataAccessInterface {
+    + getBook(openLibraryID : String) : Book
+    + saveBook(book : Book) : void
+  }
+
+  interface SearchDataAccessInterface {
+    + search(query : String) : String
+  }
 }
 
-class BookFactory {
-  + createBook(...) : Book
-}
+package data_access {
+  class FileBookshelfDataAccessObject {
+    - filePath : Path
+    - bookshelf : Bookshelf
+    + FileBookshelfDataAccessObject(filePath : String)
+    + getBookshelf() : Bookshelf
+    + existsOnBookshelf(book : Book) : boolean
+    + saveBookshelf(bookshelf : Bookshelf) : void
+    + getBook(openLibraryId : String) : Book
+    - load() : void
+    - writeToFile() : void
+    - toJson(book : Book) : JSONObject
+    - fromJson(json : JSONObject) : Book
+  }
 
-class Review {
-  + {static} MIN_RATING : int = 1
-  + {static} MAX_RATING : int = 5
-  - rating : int
-  - review : String
-  + Review(rating : int, review : String)
-  + getRating() : int
-  + getReview() : String
-}
+  class InMemoryBookDataAccessObject {
+    - books : Map<String, Book>
+    + save(book : Book) : void
+    + saveSearchResults(results : List<Book>) : void
+    + getBook(book : Book) : Book
+    + existsByOpenLibraryId(openLibraryId : String) : boolean
+    + remove(openLibraryId : String) : void
+    + getAllBooks() : List<Book>
+    + clear() : void
+  }
 
-class BookDisplay {
-  - book : Book
-}
-
-interface "Comparator<Book>" as Comparator {
-  + compare(a : Book, b : Book) : int
-}
-
-class AuthorComparator {
-  + compare(a : Book, b : Book) : int
-}
-
-class DateAddedComparator {
-  + compare(a : Book, b : Book) : int
-}
-
-class RatingComparator {
-  + compare(a : Book, b : Book) : int
-}
-
-class TitleComparator {
-  + compare(a : Book, b : Book) : int
+  class ApiSearchDataAccessObject {
+    - client : OkHttpClient
+    + search(query : String) : String
+  }
 }
 
 ' realization
@@ -80,13 +137,18 @@ AuthorComparator ..|> Comparator
 DateAddedComparator ..|> Comparator
 RatingComparator ..|> Comparator
 TitleComparator ..|> Comparator
+FileBookshelfDataAccessObject ..|> BookshelfDataAccessInterface
+FileBookshelfDataAccessObject ..|> RemoveBookDataAccessInterface
+ApiSearchDataAccessObject ..|> SearchDataAccessInterface
 
 ' association
-Bookshelf --> Book
-BookDisplay --> Book
-Book --> Review
+Bookshelf "1" o-- "*" Book
+Book "1" --> "0..1" Review
+FileBookshelfDataAccessObject --> "1" Bookshelf : stores
+InMemoryBookDataAccessObject --> "*" Book : searched books
 
-' creation
+' dependency
+Bookshelf ..> Comparator : sorts with
 BookFactory ..> Book : creates
 
 @enduml
