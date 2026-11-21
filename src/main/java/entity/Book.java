@@ -102,7 +102,7 @@ public class Book {
      * @param shelved true to shelve book, false to unshelve book.
      */
     public void setShelved(boolean shelved){
-        if (this.shelved == true ){
+        if (shelved ){
             this.dateAdded = LocalDateTime.now();
         } else {
             this.dateAdded = null;

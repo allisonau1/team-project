@@ -14,6 +14,7 @@ public class DateAddedComparator implements Comparator<Book> {
         } else if (book1.getDateAdded().isBefore(book2.getDateAdded())) {
             return 1;
         } else {
+            // Ties are handled by title
             return titleComparator.compare(book1, book2);
         }
     }
