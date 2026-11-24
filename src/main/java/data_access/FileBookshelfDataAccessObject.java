@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import use_case.addBook.BookshelfDataAccessInterface;
 import use_case.removeBook.RemoveBookDataAccessInterface;
+import use_case.sort_bookshelf.SortBookshelfDataAccessInterface;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -14,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * File-based DAO for the user's bookshelf.
@@ -24,7 +27,7 @@ import java.time.LocalDateTime;
  * Books that were only searched stay in {@link InMemoryBookDataAccessObject}.
  */
 public class FileBookshelfDataAccessObject
-        implements BookshelfDataAccessInterface, RemoveBookDataAccessInterface {
+        implements BookshelfDataAccessInterface, RemoveBookDataAccessInterface, SortBookshelfDataAccessInterface {
     private static final String OPEN_LIBRARY_ID = "openLibraryId";
     private static final String TITLE = "title";
     private static final String AUTHOR = "author";
@@ -211,5 +214,20 @@ public class FileBookshelfDataAccessObject
      */
     private static Integer intOrNull(JSONObject json, String key) {
         return json.isNull(key) ? null : json.getInt(key);
+    }
+
+    /**
+     * Returns the shelved books in the order they are stored (the user's custom order).
+     * @return the shelved books
+     */
+    @Override
+    public List<Book> getBooks() {
+        List<Book> shelved = new ArrayList<>();
+        for (Book book : bookshelf.getBooks()) {
+            if (book.isShelved()) {
+                shelved.add(book);
+            }
+        }
+        return shelved;
     }
 }
