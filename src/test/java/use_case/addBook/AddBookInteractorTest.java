@@ -12,6 +12,7 @@ import java.util.ArrayList;
 class AddBookInteractorTest {
 
     private FakeBookshelfDataAccessObject dao;
+    private FakeBookSearchDataAccessObject dao2;
     private TestPresenter presenter;
     private AddBookInteractor interactor;
 
@@ -19,21 +20,15 @@ class AddBookInteractorTest {
     void setUp() {
         dao = new FakeBookshelfDataAccessObject();
         presenter = new TestPresenter();
+        dao2 = new FakeBookSearchDataAccessObject;
 
-        interactor = new AddBookInteractor(dao, presenter);
+        interactor = new AddBookInteractor(dao, presenter, dao2);
     }
 
     @Test
     void testAddBookSuccessfully() {
 
-        AddBookInputData inputData = new AddBookInputData(
-                new Book("OL12345W",
-                        "The Great Gatsby",
-                        "F. Scott Fitzgerald",
-                        1925,
-                        "9780743273565",
-                        123456
-                ));
+        AddBookInputData inputData = new AddBookInputData("OL12345W");
 
         interactor.execute(inputData);
 
@@ -69,14 +64,7 @@ class AddBookInteractorTest {
         dao.getBookshelf().addBook(existingBook);
 
         // Add another book
-        AddBookInputData inputData = new AddBookInputData(new Book(
-                "OL12345W",
-                "The Great Gatsby",
-                "F. Scott Fitzgerald",
-                1925,
-                "9780743273565",
-                123456
-        ));
+        AddBookInputData inputData = new AddBookInputData("OL12345W");
 
         interactor.execute(inputData);
 
@@ -96,14 +84,8 @@ class AddBookInteractorTest {
 
         Bookshelf originalBookshelf = dao.getBookshelf();
 
-        AddBookInputData inputData = new AddBookInputData(
-                new Book("OL12345W",
-                "The Great Gatsby",
-                "F. Scott Fitzgerald",
-                1925,
-                "9780743273565",
-                123456
-                ));
+        AddBookInputData inputData = new AddBookInputData("OL12345W"
+                );
 
         interactor.execute(inputData);
 

@@ -1,7 +1,6 @@
 package data_access;
 
 import entity.Book;
-import use_case.addBook.BookSearchDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -16,7 +15,7 @@ import java.util.Map;
  * When the user chooses to add a book, the Add Book use case looks the book up here
  * and saves it through {@link FileBookshelfDataAccessObject}.
  */
-public class InMemoryBookDataAccessObject implements BookSearchDataAccessInterface {
+public class InMemoryBookDataAccessObject {
     private final Map<String, Book> books = new LinkedHashMap<>();
 
     /**
@@ -53,7 +52,7 @@ public class InMemoryBookDataAccessObject implements BookSearchDataAccessInterfa
      * @param openLibraryId the OpenLibraryID of the book
      * @return true if the book is stored, false otherwise
      */
-    public boolean existsByOpenLibraryId(String openLibraryId) {
+    public boolean xistsByOpenLibraryId(String openLibraryId) {
         return books.containsKey(openLibraryId);
     }
 

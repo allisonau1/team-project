@@ -12,6 +12,7 @@ import entity.Bookshelf;
 public class   AddBookInteractor implements AddBookInputBoundary {
 
     private final BookshelfDataAccessInterface bookshelfDataAccessObject;
+    private final BookSearchDataAccessInterface bookSearchDataAccessObject;
     private final AddBookOutputBoundary addBookPresenter;
 
     /**
@@ -22,10 +23,11 @@ public class   AddBookInteractor implements AddBookInputBoundary {
      */
     public AddBookInteractor(
             BookshelfDataAccessInterface bookshelfDataAccessObject,
-            AddBookOutputBoundary addBookPresenter) {
+            AddBookOutputBoundary addBookPresenter, BookSearchDataAccessInterface bookSearchDataAccessObject) {
 
         this.bookshelfDataAccessObject = bookshelfDataAccessObject;
         this.addBookPresenter = addBookPresenter;
+        this.bookSearchDataAccessObject = bookSearchDataAccessObject;
     }
 
     /**
@@ -38,17 +40,18 @@ public class   AddBookInteractor implements AddBookInputBoundary {
 
         // Retrieve the existing bookshelf.
         Bookshelf bookshelf = bookshelfDataAccessObject.getBookshelf();
+        String openLibraryId = inputData.getOpenLibraryID();
+        Book book = bookSearchDataAccessObject.getBook(inputData.getOpenLibraryID());
 
         // Check whether the book could be retrieved.
-        if (inputData.getBook() == null) {
+        if (book == null) {
             addBookPresenter.prepareFailView(
                     "Book could not be found.");
             return;
         }
 
         // Check whether the book already exists in the bookshelf.
-        if (bookshelfDataAccessObject.existsOnBookshelf(
-                inputData.getBook())) {
+        if (bookshelfDataAccessObject.existsOnBookshelf(openLibraryId)) {
 
             addBookPresenter.prepareFailView(
                     "This book is already on your bookshelf.");
@@ -56,12 +59,12 @@ public class   AddBookInteractor implements AddBookInputBoundary {
         }
 
         // Add the book to the user's bookshelf.
-        inputData.getBook().setShelved(true);
-        bookshelf.addBook(inputData.getBook());
+        book.setShelved(true);
+        bookshelf.addBook(book);
         bookshelfDataAccessObject.saveBookshelf(bookshelf);
 
         // Notify the presenter that the book was successfully added.
-        AddBookOutputData outputData = new AddBookOutputData(inputData.getBook());
+        AddBookOutputData outputData = new AddBookOutputData(book);
 
         addBookPresenter.prepareSuccessView(outputData);
     }
