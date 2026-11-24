@@ -20,7 +20,7 @@ public class RateReviewOutputData  {
      *
      * @return the added review of the book
      */
-    String getReview() {
+    public String getReview() {
         return review;
     }
 
@@ -29,7 +29,7 @@ public class RateReviewOutputData  {
      *
      * @return the added rating of the book
      */
-    Integer getRating() {
+    public Integer getRating() {
         return rating;
     }
 
