@@ -63,26 +63,20 @@ public class FileBookshelfDataAccessObject
 
     /**
      * Checks whether a book with the same OpenLibraryID is on the bookshelf.
-     * @param book the book to look for
+     * @param openLibraryId the OpenLibraryID of the book
      * @return true if the book is on the bookshelf, false otherwise
      */
     @Override
-    public boolean existsOnBookshelf(Book book) {
-        return book != null && getBook(book.getOpenLibraryId()) != null;
+    public boolean existsOnBookshelf(String openLibraryId) {
+        return getBook(openLibraryId) != null;
     }
 
     /**
      * Saves the bookshelf and writes it to the file.
-     * Books that were not shelved yet are marked as shelved, which sets their date added.
      * @param bookshelf the bookshelf to save
      */
     @Override
     public void saveBookshelf(Bookshelf bookshelf) {
-        for (Book book : bookshelf.getBooks()) {
-            if (!book.isShelved()) {
-                book.setShelved(true);
-            }
-        }
         this.bookshelf = bookshelf;
         writeToFile();
     }
