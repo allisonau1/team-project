@@ -1,7 +1,10 @@
 package interface_adapter.search;
 
+import entity.Book;
 import interface_adapter.ViewManagerModel;
 import use_case.search.SearchOutputBoundary;
+
+import java.util.List;
 
 /**
  * The Presenter for the Search Use Case.
@@ -17,7 +20,7 @@ public class SearchPresenter implements SearchOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(String response) {
+    public void prepareSuccessView(List<Book> response) {
         final SearchState searchState = searchViewModel.getState();
         searchState.setResult(response);
         searchViewModel.notifyStateChanged();

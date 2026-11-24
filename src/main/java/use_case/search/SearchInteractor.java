@@ -1,5 +1,7 @@
 package use_case.search;
 
+import entity.Book;
+
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ public class SearchInteractor implements SearchInputBoundary {
 
     @Override
     public void execute(SearchInputData inputData) {
-        String results = searchDataAccessObject.search(inputData.getQuery());
+        List<Book> results = searchDataAccessObject.search(inputData.getQuery());
         presenter.prepareSuccessView(results);
     }
 }

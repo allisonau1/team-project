@@ -1,12 +1,16 @@
 package interface_adapter.search;
 
+import entity.Book;
+
+import java.util.List;
+
 /**
  * The state for the Search View Model.
  */
 public class SearchState {
     private String query = "";
     private String queryError;
-    private String result = "";
+    private List<Book> result;
     private String resultError;
 
     public String getQuery() {
@@ -17,7 +21,7 @@ public class SearchState {
         return queryError;
     }
 
-    public String getResult() {
+    public List<Book> getResult() {
         return result;
     }
 
@@ -33,7 +37,7 @@ public class SearchState {
         this.queryError = queryError;
     }
 
-    public void setResult(String result) {
+    public void setResult(List<Book> result) {
         this.result = result;
     }
 

@@ -1,5 +1,6 @@
 package use_case.search;
 
+import entity.Book;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,9 +11,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SearchInteractorTest {
     @Test
     void forwardsQueryToDaoAndResultToPresenter() {
-        String expectedResult = "{\"docs\":[{\"title\":\"Harry Potter\"}]}";
+        Book book = new Book(
+                "/works/OL82563W",
+                "Harry Potter and the Philosopher's Stone",
+                "J. K. Rowling",
+                1997,
+                null,       // ISBN
+                15155833    // Cover ID
+        );
+        List<Book> expectedResult = List.of(book);
         List<String> receivedQueries = new ArrayList<>();
-        List<String> presentedResults = new ArrayList<>();
+        List<Book> presentedResults = new ArrayList<>();
 
         SearchDataAccessInterface fakeDao = query -> {
             receivedQueries.add(query);
@@ -21,8 +30,8 @@ public class SearchInteractorTest {
 
         SearchOutputBoundary fakePresenter = new SearchOutputBoundary() {
             @Override
-            public void prepareSuccessView(String result) {
-                presentedResults.add(result);
+            public void prepareSuccessView(List<Book> result) {
+                presentedResults.addAll(result);
             }
             @Override
             public void prepareFailView(String error) {
