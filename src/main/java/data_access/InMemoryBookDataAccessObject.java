@@ -28,24 +28,13 @@ public class InMemoryBookDataAccessObject implements BookSearchDataAccessInterfa
     }
 
     /**
-     * Stores all books from a search, replacing the previous search results.
-     * @param results the books returned by the latest search
-     */
-    public void saveSearchResults(List<Book> results) {
-        books.clear();
-        for (Book book : results) {
-            save(book);
-        }
-    }
-
-    /**
-     * Returns the stored searched book with the same OpenLibraryID as the given book.
-     * @param book the book to look up
+     * Returns the stored searched book with the OpenLibraryID.
+     * @param openLibraryId the OpenLibraryID of the book
      * @return the stored book, or null if no book with that OpenLibraryID is stored
      */
     @Override
-    public Book getBook(Book book) {
-        return book == null ? null : books.get(book.getOpenLibraryId());
+    public Book getBook(String openLibraryId) {
+        return books.get(openLibraryId);
     }
 
     /**
