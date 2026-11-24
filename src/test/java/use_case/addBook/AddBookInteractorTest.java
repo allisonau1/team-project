@@ -127,22 +127,39 @@ class AddBookInteractorTest {
         }
 
         @Override
-        public void save(Bookshelf bookshelf) {
+        public void saveBookshelf(Bookshelf bookshelf) {
             this.bookshelf = bookshelf;
             this.savedBookshelf = bookshelf;
             this.saveCalled = true;
         }
-    }
+
+        @Override
+        public boolean existsOnBookshelf(Book book){
+            boolean bookNull = book != null;
+            boolean exists = false;
+            for (Book b: this.bookshelf.getBooks()){
+                if (b.equals(book)) {
+                    exists = true;
+                    break;
+                }
+            }
+            return bookNull && exists;
+        }
+    } 
 
     // Fake presenter for testing
-    private static class TestPresenter
-            implements AddBookOutputBoundary {
+    private static class TestPresenter implements AddBookOutputBoundary {
 
         private boolean successCalled = false;
 
         @Override
         public void prepareSuccessView(AddBookOutputData outputData) {
             successCalled = true;
+        }
+
+        @Override
+        public void prepareFailView(String errorMessage) {
+            successCalled = false;
         }
     }
 }
