@@ -2,106 +2,46 @@ package use_case.addBook;
 
 import entity.Book;
 import entity.Bookshelf;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-
 class AddBookInteractorTest {
 
-    private FakeBookshelfDataAccessObject dao;
-    private FakeBookSearchDataAccessObject dao2;
-    private TestPresenter presenter;
-    private AddBookInteractor interactor;
+    /**
+     * Fake book search data access object for testing.
+     * Stores books in memory using their Open Library IDs.
+     */
+    private static class FakeBookSearchDataAccessObject
+            implements BookSearchDataAccessInterface {
 
-    @BeforeEach
-    void setUp() {
-        dao = new FakeBookshelfDataAccessObject();
-        presenter = new TestPresenter();
-        dao2 = new FakeBookSearchDataAccessObject;
+        private final Map<String, Book> books = new HashMap<>();
 
-        interactor = new AddBookInteractor(dao, presenter, dao2);
+        public void save(Book book) {
+            books.put(book.getOpenLibraryId(), book);
+        }
+
+        @Override
+        public Book getBook(String openLibraryId) {
+            return books.get(openLibraryId);
+        }
     }
 
-    @Test
-    void testAddBookSuccessfully() {
-
-        AddBookInputData inputData = new AddBookInputData("OL12345W");
-
-        interactor.execute(inputData);
-
-        // Check that the book was added
-        assertEquals(1, dao.getBookshelf().getBooks().size());
-
-        Book addedBook = dao.getBookshelf().getBooks().get(0);
-
-        assertEquals("The Great Gatsby", addedBook.getTitle());
-        assertEquals("F. Scott Fitzgerald", addedBook.getAuthor());
-        assertEquals("9780743273565", addedBook.getIsbn());
-
-        // Check that the bookshelf was saved
-        assertTrue(dao.saveCalled);
-
-        // Check that the presenter was called
-        assertTrue(presenter.successCalled);
-    }
-
-    @Test
-    void testAddBookPreservesExistingBooks() {
-
-        // Add an existing book before executing the use case
-        Book existingBook = new Book(
-                "OL12345W",
-                "The Great Gatsby",
-                "F. Scott Fitzgerald",
-                1925,
-                "9780743273565",
-                123456
-        );
-
-        dao.getBookshelf().addBook(existingBook);
-
-        // Add another book
-        AddBookInputData inputData = new AddBookInputData("OL12345W");
-
-        interactor.execute(inputData);
-
-        // Both books should still exist
-        assertEquals(2, dao.getBookshelf().getBooks().size());
-
-        assertSame(existingBook, dao.getBookshelf().getBooks().get(0));
-
-        assertEquals(
-                "The Great Gatsby",
-                dao.getBookshelf().getBooks().get(1).getTitle()
-        );
-    }
-
-    @Test
-    void testExistingBookshelfIsSaved() {
-
-        Bookshelf originalBookshelf = dao.getBookshelf();
-
-        AddBookInputData inputData = new AddBookInputData("OL12345W"
-                );
-
-        interactor.execute(inputData);
-
-        // The DAO should save the existing bookshelf,
-        // not replace it with a new empty bookshelf.
-        assertSame(originalBookshelf, dao.savedBookshelf);
-    }
-
-    // Fake DAO for testing
+    /**
+     * Fake bookshelf data access object for testing.
+     * Stores the bookshelf in memory.
+     */
     private static class FakeBookshelfDataAccessObject
             implements BookshelfDataAccessInterface {
 
-        private Bookshelf bookshelf = new Bookshelf();
+        private Bookshelf bookshelf;
 
-        private boolean saveCalled = false;
-        private Bookshelf savedBookshelf;
+        public FakeBookshelfDataAccessObject(Bookshelf bookshelf) {
+            this.bookshelf = bookshelf;
+        }
 
         @Override
         public Bookshelf getBookshelf() {
@@ -109,39 +49,170 @@ class AddBookInteractorTest {
         }
 
         @Override
+        public boolean existsOnBookshelf(String openLibraryId) {
+            return bookshelf.getBooks().stream()
+                    .anyMatch(book ->
+                            book.getOpenLibraryId().equals(openLibraryId));
+        }
+
+        @Override
         public void saveBookshelf(Bookshelf bookshelf) {
             this.bookshelf = bookshelf;
-            this.savedBookshelf = bookshelf;
-            this.saveCalled = true;
+        }
+    }
+
+    /**
+     * This class acts as our presenter for the test.
+     * Records whether the interactor prepares a success or failure view.
+     */
+    private static class OutputRecorder implements AddBookOutputBoundary {
+
+        private AddBookOutputData success;
+        private String failure;
+
+        @Override
+        public void prepareSuccessView(AddBookOutputData data) {
+            this.success = data;
         }
 
         @Override
-        public boolean existsOnBookshelf(Book book){
-            boolean bookNull = book != null;
-            boolean exists = false;
-            for (Book b: this.bookshelf.getBooks()){
-                if (b.equals(book)) {
-                    exists = true;
-                    break;
-                }
-            }
-            return bookNull && exists;
+        public void prepareFailView(String error) {
+            this.failure = error;
         }
-    } 
+    }
 
-    // Fake presenter for testing
-    private static class TestPresenter implements AddBookOutputBoundary {
+    /**
+     * Tests that a book is successfully added to the bookshelf.
+     */
+    @Test
+    void successTest() {
 
-        private boolean successCalled = false;
+        // Arrange
+        Book book = new Book(
+                "OL12345W",
+                "The Great Gatsby",
+                "F. Scott Fitzgerald",
+                1925,
+                "9780743273565",
+                12345
+        );
 
-        @Override
-        public void prepareSuccessView(AddBookOutputData outputData) {
-            successCalled = true;
-        }
+        FakeBookSearchDataAccessObject bookSearchDAO =
+                new FakeBookSearchDataAccessObject();
+        bookSearchDAO.save(book);
 
-        @Override
-        public void prepareFailView(String errorMessage) {
-            successCalled = false;
-        }
+        Bookshelf bookshelf = new Bookshelf();
+
+        FakeBookshelfDataAccessObject bookshelfDAO =
+                new FakeBookshelfDataAccessObject(bookshelf);
+
+        OutputRecorder recorder = new OutputRecorder();
+
+        AddBookInputData inputData = new AddBookInputData("OL12345W");
+
+        AddBookInteractor interactor = new AddBookInteractor(
+                bookshelfDAO,
+                recorder,
+                bookSearchDAO
+        );
+
+        // Act
+        interactor.execute(inputData);
+
+        // Assert
+        assertNotNull(recorder.success);
+        assertNull(recorder.failure);
+
+        assertEquals(book, recorder.success.getBook());
+        assertTrue(bookshelfDAO.existsOnBookshelf("OL12345W"));
+        assertEquals(1, bookshelfDAO.getBookshelf().getBooks().size());
+    }
+
+    /**
+     * Tests that an error is returned when the requested book cannot be found.
+     */
+    @Test
+    void failureBookNotFoundTest() {
+
+        // Arrange
+        FakeBookSearchDataAccessObject bookSearchDAO =
+                new FakeBookSearchDataAccessObject();
+
+        Bookshelf bookshelf = new Bookshelf();
+
+        FakeBookshelfDataAccessObject bookshelfDAO =
+                new FakeBookshelfDataAccessObject(bookshelf);
+
+        OutputRecorder recorder = new OutputRecorder();
+
+        AddBookInputData inputData = new AddBookInputData("OL12345W");
+
+        AddBookInteractor interactor = new AddBookInteractor(
+                bookshelfDAO,
+                recorder,
+                bookSearchDAO
+        );
+
+        // Act
+        interactor.execute(inputData);
+
+        // Assert
+        assertNull(recorder.success);
+        assertNotNull(recorder.failure);
+
+        assertEquals("Book could not be found.", recorder.failure);
+        assertFalse(bookshelfDAO.existsOnBookshelf("OL12345W"));
+    }
+
+    /**
+     * Tests that an error is returned when the book is already on the bookshelf.
+     */
+    @Test
+    void failureBookAlreadyExistsTest() {
+
+        // Arrange
+        Book book = new Book(
+                "OL12345W",
+                "The Great Gatsby",
+                "F. Scott Fitzgerald",
+                1925,
+                "9780743273565",
+                12345
+        );
+
+        FakeBookSearchDataAccessObject bookSearchDAO =
+                new FakeBookSearchDataAccessObject();
+        bookSearchDAO.save(book);
+
+        Bookshelf bookshelf = new Bookshelf();
+        bookshelf.addBook(book);
+
+        FakeBookshelfDataAccessObject bookshelfDAO =
+                new FakeBookshelfDataAccessObject(bookshelf);
+
+        OutputRecorder recorder = new OutputRecorder();
+
+        AddBookInputData inputData = new AddBookInputData("OL12345W");
+
+        AddBookInteractor interactor = new AddBookInteractor(
+                bookshelfDAO,
+                recorder,
+                bookSearchDAO
+        );
+
+        // Act
+        interactor.execute(inputData);
+
+        // Assert
+        assertNull(recorder.success);
+        assertNotNull(recorder.failure);
+
+        assertEquals(
+                "This book is already on your bookshelf.",
+                recorder.failure
+        );
+
+        assertTrue(bookshelfDAO.existsOnBookshelf("OL12345W"));
+        assertEquals(1, bookshelfDAO.getBookshelf().getBooks().size());
     }
 }

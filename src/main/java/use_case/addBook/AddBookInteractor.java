@@ -41,7 +41,7 @@ public class   AddBookInteractor implements AddBookInputBoundary {
         // Retrieve the existing bookshelf.
         Bookshelf bookshelf = bookshelfDataAccessObject.getBookshelf();
         String openLibraryId = inputData.getOpenLibraryID();
-        Book book = bookSearchDataAccessObject.getBook(inputData.getOpenLibraryID());
+        Book book = bookSearchDataAccessObject.getBook(openLibraryId);
 
         // Check whether the book could be retrieved.
         if (book == null) {
