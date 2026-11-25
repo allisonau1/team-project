@@ -1,31 +1,23 @@
 package use_case.addBook;
 
-import entity.Book;
-
 /**
  * Stores the output data produced after successfully
  * adding a book to the user's bookshelf.
  */
 public class AddBookOutputData {
 
-    private final Book book;
+    private final String title;
+    private final String author;
 
     /**
      * Creates an AddBookOutputData object.
      *
-     * @param book the book that was added to the bookshelf
+     * @param title the title of the book added to shelf.
+     * @param author the author of the book added to shelf.
      */
-    public AddBookOutputData(Book book) {
-        this.book = book;
-    }
-
-    /**
-     * Returns the book that was added.
-     *
-     * @return the added book
-     */
-    public Book getBook() {
-        return book;
+    public AddBookOutputData(String title, String author) {
+        this.title = title;
+        this.author = author;
     }
 
     /**
@@ -34,7 +26,7 @@ public class AddBookOutputData {
      * @return the added book title
      */
     public String getTitle() {
-        return book.getTitle();
+        return this.title;
     }
 
     /**
@@ -43,6 +35,6 @@ public class AddBookOutputData {
      * @return the added book author
      */
     public String getAuthor() {
-        return book.getAuthor();
+        return this.author;
     }
 }
