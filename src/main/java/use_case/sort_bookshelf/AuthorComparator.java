@@ -3,6 +3,10 @@ package use_case.sort_bookshelf;
 import entity.Book;
 import java.util.Comparator;
 
+/**
+ * Orders books alphabetically by author, ignoring case.
+ * Books by the same author are ordered by title.
+ */
 public class AuthorComparator implements Comparator<Book> {
 
     private final TitleComparator titleComparator = new TitleComparator();

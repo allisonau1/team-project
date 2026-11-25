@@ -1,5 +1,9 @@
 package use_case.sort_bookshelf;
 
+/**
+ * The ways the bookshelf can be sorted.
+ * CUSTOM leaves the books in the user's own order.
+ */
 public enum SortOption {
     CUSTOM,
     TITLE,

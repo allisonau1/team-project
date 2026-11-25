@@ -4,11 +4,21 @@ import entity.Book;
 import entity.Review;
 import java.util.Comparator;
 
+/**
+ * Orders books by their review rating.
+ * Unreviewed books always come last, in either direction.
+ * Books with the same rating are ordered by title.
+ */
 public class RatingComparator implements Comparator<Book> {
 
     private final TitleComparator titleComparator = new TitleComparator();
     private final boolean highestFirst;
 
+    /**
+     * Creates a rating comparator.
+     * @param highestFirst true to put the highest rating first,
+     *                     false to put the lowest rating first
+     */
     public RatingComparator(boolean highestFirst) {
         this.highestFirst = highestFirst;
     }

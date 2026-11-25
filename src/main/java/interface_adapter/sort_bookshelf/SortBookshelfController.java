@@ -10,6 +10,10 @@ import use_case.sort_bookshelf.SortOption;
 public class SortBookshelfController {
     private final SortBookshelfInputBoundary interactor;
 
+    /**
+     * Creates the controller.
+     * @param interactor the input boundary that runs the use case
+     */
     public SortBookshelfController(SortBookshelfInputBoundary interactor) {
         this.interactor = interactor;
     }

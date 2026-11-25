@@ -1,5 +1,8 @@
 package interface_adapter.sort_bookshelf;
 
+/**
+ * Listener for changes to the sort bookshelf state.
+ */
 public interface SortBookshelfViewModelListener {
 
     /**

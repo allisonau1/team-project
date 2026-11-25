@@ -9,6 +9,10 @@ import use_case.sort_bookshelf.SortBookshelfOutputData;
 public class SortBookshelfPresenter implements SortBookshelfOutputBoundary {
     private final SortBookshelfViewModel sortBookshelfViewModel;
 
+    /**
+     * Creates the presenter.
+     * @param sortBookshelfViewModel the view model to update
+     */
     public SortBookshelfPresenter(SortBookshelfViewModel sortBookshelfViewModel) {
         this.sortBookshelfViewModel = sortBookshelfViewModel;
     }

@@ -5,10 +5,19 @@ import java.util.Comparator;
 import java.util.List;
 import entity.Book;
 
+/**
+ * The interactor for the Sort Bookshelf use case.
+ * Sorts a copy of the bookshelf so the user's custom order is never modified.
+ */
 public class SortBookshelfInteractor implements SortBookshelfInputBoundary {
     private final SortBookshelfDataAccessInterface dataAccess;
     private final SortBookshelfOutputBoundary presenter;
 
+    /**
+     * Creates the interactor.
+     * @param dataAccess the data access object used to read the bookshelf
+     * @param presenter the presenter that receives the sorted books
+     */
     public SortBookshelfInteractor(SortBookshelfDataAccessInterface dataAccess,
                                    SortBookshelfOutputBoundary presenter) {
         this.dataAccess = dataAccess;
@@ -28,6 +37,11 @@ public class SortBookshelfInteractor implements SortBookshelfInputBoundary {
                 new SortBookshelfOutputData(books, inputData.getSortOption()));
     }
 
+    /**
+     * Returns the comparator for a sort option.
+     * @param option the sort option
+     * @return the comparator, or null for CUSTOM (no sorting)
+     */
     private Comparator<Book> getComparator(SortOption option) {
         switch (option) {
             case TITLE:
