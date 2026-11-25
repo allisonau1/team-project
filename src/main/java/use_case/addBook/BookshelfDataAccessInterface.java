@@ -10,7 +10,7 @@ public interface BookshelfDataAccessInterface {
 
     Bookshelf getBookshelf();
 
-    boolean existsOnBookshelf(Book book);
+    boolean existsOnBookshelf(String openLibraryId);
 
     void saveBookshelf(Bookshelf bookshelf);
 }

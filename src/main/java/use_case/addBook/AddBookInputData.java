@@ -7,21 +7,21 @@ import entity.Book;
  * to the user's personal bookshelf.
  */
 public class AddBookInputData {
-    private final Book book;
+    private final String openLibraryID;
     /**
      * Creates an AddBookInputData object.
-     * @param book the selected book
+     * @param openLibraryID the selected book's open library ID
      */
-    public AddBookInputData(Book book) {
-        this.book = book;
+    public AddBookInputData(String openLibraryID) {
+        this.openLibraryID = openLibraryID;
     }
 
     /**
     * Returns the selected book.
     *
-    * @return the selected book.
+    * @return the selected book by its open library ID.
      */
-    public Book getBook() {
-            return this.book;
+    public String getOpenLibraryID() {
+            return this.openLibraryID;
         }
 }
