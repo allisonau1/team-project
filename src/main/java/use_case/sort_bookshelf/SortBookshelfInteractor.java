@@ -18,8 +18,7 @@ public class SortBookshelfInteractor implements SortBookshelfInputBoundary {
     @Override
     public void execute(SortBookshelfInputData inputData) {
         // Copy so the stored (custom) order is never modified
-        List<Book> books = new ArrayList<>(dataAccess.getBooks());
-
+        List<Book> books = new ArrayList<>(dataAccess.getBookshelf().getBooks());
         Comparator<Book> comparator = getComparator(inputData.getSortOption());
         if (comparator != null) {
             books.sort(comparator);

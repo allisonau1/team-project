@@ -1,8 +1,7 @@
 package use_case.sort_bookshelf;
 
-import java.util.List;
-import entity.Book;
+import entity.Bookshelf;
 
 public interface SortBookshelfDataAccessInterface {
-    List<Book> getBooks();
+    Bookshelf getBookshelf();
 }
