@@ -20,6 +20,10 @@ public class SearchInteractor implements SearchInputBoundary {
     @Override
     public void execute(SearchInputData inputData) {
         List<Book> results = searchDataAccessObject.search(inputData.getQuery());
+        if (results == null) {
+            presenter.prepareFailView("Couldn't load search results. Please try again.");
+            return;
+        }
         presenter.prepareSuccessView(results);
     }
 }
