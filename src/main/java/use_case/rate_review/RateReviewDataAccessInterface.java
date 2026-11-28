@@ -1,5 +1,7 @@
 package use_case.rate_review;
 import entity.Book;
+import entity.Bookshelf;
+
 
 /**
  * DAO interface for the Rate and Review Use Case.
@@ -14,8 +16,14 @@ public interface RateReviewDataAccessInterface {
     Book getBook(String openLibraryID);
 
     /**
-     * Saves the given book, including its current rating and review.
-     * @param book the book to save
+     * Returns the user's bookshelf.
+     * @return the bookshelf
      */
-    void saveBook(Book book);
+    Bookshelf getBookshelf();
+
+    /**
+     * Saves the bookshelf, including every book's rating and review.
+     * @param bookshelf the bookshelf to save
+     */
+    void saveBookshelf(Bookshelf bookshelf);
 }

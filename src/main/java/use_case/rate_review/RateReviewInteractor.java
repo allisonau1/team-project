@@ -10,7 +10,7 @@ import entity.Review;
 public class RateReviewInteractor implements RateReviewInputBoundary{
     private final RateReviewDataAccessInterface dataAccessObject;
     private final RateReviewOutputBoundary rateReviewPresenter;
-    /*
+    /**
      * Constructs a RateReviewInteractor
      *
      * @param dataAccessObject provides access to book information
@@ -34,12 +34,11 @@ public class RateReviewInteractor implements RateReviewInputBoundary{
     @Override
     public void execute(RateReviewInputData rateReviewInputData) {
         final String openLibraryID = rateReviewInputData.getOpenLibraryID();
-        final Book book = dataAccessObject.getBook(rateReviewInputData.getOpenLibraryID());
         final Integer reviewRating = rateReviewInputData.getRating();
         final String reviewText = rateReviewInputData.getReview() == null ? "" :
                 rateReviewInputData.getReview().trim();
+        final Book book = dataAccessObject.getBook(openLibraryID);
 
-        // checks if book does not exist and is not shelved
         if (book == null|| !book.isShelved()){
             rateReviewPresenter.prepareFailView(openLibraryID
                     + " : Add book to bookshelf before reviewing it.");
@@ -55,14 +54,14 @@ public class RateReviewInteractor implements RateReviewInputBoundary{
         } else if (reviewRating == null && reviewText.isEmpty()) {
             // nothing entered: clear the book's review
             book.setReview(null);
-            dataAccessObject.saveBook(book);
+            dataAccessObject.saveBookshelf(dataAccessObject.getBookshelf());
             rateReviewPresenter.prepareSuccessView(new RateReviewOutputData(book.getOpenLibraryId(),
                     null, ""));
 
         }else { // saves review to book
             final Review review = new Review(openLibraryID, reviewRating, reviewText);
             book.setReview(review);
-            dataAccessObject.saveBook(book);
+            dataAccessObject.saveBookshelf(dataAccessObject.getBookshelf());
             rateReviewPresenter.prepareSuccessView(new RateReviewOutputData(book.getOpenLibraryId(),
                     review.getRating(), review.getReview()));
 

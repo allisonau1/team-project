@@ -38,5 +38,5 @@ public class RateReviewOutputData  {
      *
      * @return the added openLibraryID of the book
      */
-    String getOpenLibraryID() {return openLibraryID;}
+    public String getOpenLibraryID() {return openLibraryID;}
 }
