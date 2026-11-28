@@ -6,6 +6,7 @@ import entity.Review;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import use_case.addBook.BookshelfDataAccessInterface;
+import use_case.rate_review.RateReviewDataAccessInterface;
 import use_case.removeBook.RemoveBookDataAccessInterface;
 import use_case.sort_bookshelf.SortBookshelfDataAccessInterface;
 
@@ -25,7 +26,8 @@ import java.time.LocalDateTime;
  * Books that were only searched stay in {@link InMemoryBookDataAccessObject}.
  */
 public class FileBookshelfDataAccessObject
-        implements BookshelfDataAccessInterface, RemoveBookDataAccessInterface, SortBookshelfDataAccessInterface {
+        implements BookshelfDataAccessInterface, RemoveBookDataAccessInterface,
+        SortBookshelfDataAccessInterface, RateReviewDataAccessInterface {
     private static final String OPEN_LIBRARY_ID = "openLibraryId";
     private static final String TITLE = "title";
     private static final String AUTHOR = "author";
