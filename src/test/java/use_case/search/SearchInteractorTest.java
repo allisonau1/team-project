@@ -1,5 +1,6 @@
 package use_case.search;
 
+import data_access.InMemoryBookDataAccessObject;
 import entity.Book;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +41,9 @@ public class SearchInteractorTest {
             }
         };
 
-        SearchInteractor interactor = new SearchInteractor(fakeDao, fakePresenter);
+        InMemoryBookDataAccessObject inMemoryDao = new InMemoryBookDataAccessObject();
+
+        SearchInteractor interactor = new SearchInteractor(fakeDao, fakePresenter, inMemoryDao);
         interactor.execute(new SearchInputData("Harry Potter"));
 
         assertEquals(List.of("Harry Potter"), receivedQueries);

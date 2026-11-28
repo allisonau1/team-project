@@ -1,5 +1,6 @@
 package use_case.search;
 
+import data_access.InMemoryBookDataAccessObject;
 import entity.Book;
 
 import java.util.ArrayList;
@@ -13,16 +14,20 @@ import java.util.Map;
 public class SearchInteractor implements SearchInputBoundary {
     private final SearchDataAccessInterface searchDataAccessObject;
     private final SearchOutputBoundary presenter;
+    private final InMemoryBookDataAccessObject searchResultsDataAccessObject;
 
     public SearchInteractor(SearchDataAccessInterface searchDataAccessInterface,
-                            SearchOutputBoundary presenter) {
+                            SearchOutputBoundary presenter,
+                            InMemoryBookDataAccessObject searchResultsDataAccessObject) {
         this.searchDataAccessObject = searchDataAccessInterface;
         this.presenter = presenter;
+        this.searchResultsDataAccessObject = searchResultsDataAccessObject;
     }
 
     @Override
     public void execute(SearchInputData inputData) {
         List<Book> results = searchDataAccessObject.search(inputData.getQuery());
+        searchResultsDataAccessObject.saveSearchResults(results);
         if (results == null) {
             presenter.prepareFailView("Couldn't load search results. Please try again.");
             return;
