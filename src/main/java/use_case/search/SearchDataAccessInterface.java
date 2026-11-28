@@ -1,5 +1,7 @@
 package use_case.search;
 
+import entity.Book;
+
 import java.util.List;
 
 /**
@@ -9,7 +11,7 @@ public interface SearchDataAccessInterface {
     /**
      * Search with query and return the result as a List of Book.
      * @param query the query to search for
-     * @return String of the list of books
+     * @return {@code List<Book>} of the list of books
      */
-    String search(String query);
+    List<Book> search(String query);
 }

@@ -158,7 +158,7 @@ public class FileBookshelfDataAccessObject
                 ? JSONObject.NULL : book.getDateAdded().toString());
 
         Review review = book.getReview();
-        json.put(RATING, review == null ? JSONObject.NULL : review.getRating());
+        json.put(RATING, review == null ? JSONObject.NULL : orNull(review.getRating()));
         json.put(REVIEW, review == null ? JSONObject.NULL : orNull(review.getReview()));
         return json;
     }
@@ -167,7 +167,7 @@ public class FileBookshelfDataAccessObject
      * Converts a JSON object back into a book.
      * Missing or null fields become null, except shelved, which defaults to false.
      * OpenLibraryID is required.
-     * A review is only created if a rating was saved, since every review has a rating.
+     * A review is created if a rating or review text was saved.
      *
      * @param json the JSON object to convert
      * @return the book represented by the JSON object
@@ -188,8 +188,9 @@ public class FileBookshelfDataAccessObject
         book.setDateAdded(dateAdded == null ? null : LocalDateTime.parse(dateAdded));
 
         Integer rating = intOrNull(json, RATING);
-        if (rating != null) {
-            book.setReview(new Review(book.getOpenLibraryId(), rating, stringOrNull(json, REVIEW)));
+        String reviewText = stringOrNull(json, REVIEW);
+        if (rating != null || (reviewText != null && !reviewText.isEmpty())) {
+            book.setReview(new Review(book.getOpenLibraryId(), rating, reviewText));
         }
         return book;
     }
