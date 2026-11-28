@@ -1,40 +1,80 @@
 package interface_adapter.rate_review;
 
-import entity.Book;
 /**
- * The state for the Shelved Book View. Which book is shown, its rating, review,
- * and any status or error message.
+ * The state for the Shelved Book View. Which book is shown, its display details,
+ * its rating and review, and any status or error message.
+ * Holds only strings and numbers so that it does not depend on the Book entity.
  */
 public class ShelvedBookState {
     private String openLibraryID = "";
     private String title = "";
+    private String author = "";
+    private String isbn = "N/A";
+    private String publicationYear = "N/A";
+    private String dateAdded = "N/A";
+    private Integer coverId;
     private Integer rating;
     private String reviewText = "";
     private String message = "";
     private String errorMessage = "";
 
-
-    public static ShelvedBookState fromBook(Book book){
-        final ShelvedBookState state = new ShelvedBookState();
-        state.openLibraryID = book.getOpenLibraryId();
-        state.title = book.getTitle();
-        if (book.getReview() != null){
-            state.rating = book.getReview().getRating();
-            state.reviewText = book.getReview().getReview();
-        }
-        return state;
-
-    }
-
-    public String getOpenLibraryID(){
+    public String getOpenLibraryID() {
         return openLibraryID;
     }
 
-    public String getTitle(){
+    public void setOpenLibraryID(String openLibraryID) {
+        this.openLibraryID = openLibraryID;
+    }
+
+    public String getTitle() {
         return title;
     }
 
-    public Integer getRating(){
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getPublicationYear() {
+        return publicationYear;
+    }
+
+    public void setPublicationYear(String publicationYear) {
+        this.publicationYear = publicationYear;
+    }
+
+    public String getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public Integer getCoverId() {
+        return coverId;
+    }
+
+    public void setCoverId(Integer coverId) {
+        this.coverId = coverId;
+    }
+
+    public Integer getRating() {
         return rating;
     }
 
@@ -42,15 +82,15 @@ public class ShelvedBookState {
         this.rating = rating;
     }
 
-    public String getReviewText(){
+    public String getReviewText() {
         return reviewText;
     }
 
-    public void setReviewText(String review) {
+    public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
     }
 
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
 
@@ -58,11 +98,11 @@ public class ShelvedBookState {
         this.message = message;
     }
 
-    public String getErrorMessage(){
+    public String getErrorMessage() {
         return errorMessage;
     }
 
-    public void setErrorMessage(String message) {
+    public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 }
