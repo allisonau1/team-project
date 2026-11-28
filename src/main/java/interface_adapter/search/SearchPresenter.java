@@ -3,6 +3,7 @@ package interface_adapter.search;
 import entity.Book;
 import interface_adapter.ViewManagerModel;
 import use_case.search.SearchOutputBoundary;
+import use_case.search.SearchOutputData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +23,10 @@ public class SearchPresenter implements SearchOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(List<Map<String, Object>> response) {
+    public void prepareSuccessView(SearchOutputData searchOutputData) {
         final SearchState searchState = searchViewModel.getState();
 
-        searchState.setResult(response);
+        searchState.setResult(searchOutputData.getResult());
         searchViewModel.notifyStateChanged();
 
         viewManagerModel.setState(SearchViewModel.VIEW_NAME);

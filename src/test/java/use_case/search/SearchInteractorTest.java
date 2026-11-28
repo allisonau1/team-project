@@ -31,8 +31,8 @@ public class SearchInteractorTest {
 
         SearchOutputBoundary fakePresenter = new SearchOutputBoundary() {
             @Override
-            public void prepareSuccessView(List<Map<String, Object>> result) {
-                presentedResults.addAll(result);
+            public void prepareSuccessView(SearchOutputData searchOutputData) {
+                presentedResults.addAll(searchOutputData.getResult());
             }
             @Override
             public void prepareFailView(String error) {
