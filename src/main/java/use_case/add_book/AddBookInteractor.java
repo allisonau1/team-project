@@ -1,4 +1,4 @@
-package use_case.addBook;
+package use_case.add_book;
 
 import entity.Book;
 import entity.Bookshelf;
@@ -64,7 +64,7 @@ public class   AddBookInteractor implements AddBookInputBoundary {
         bookshelfDataAccessObject.saveBookshelf(bookshelf);
 
         // Notify the presenter that the book was successfully added.
-        AddBookOutputData outputData = new AddBookOutputData(book);
+        AddBookOutputData outputData = new AddBookOutputData(book.getTitle(), book.getAuthor());
 
         addBookPresenter.prepareSuccessView(outputData);
     }

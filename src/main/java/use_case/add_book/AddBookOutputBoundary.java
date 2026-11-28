@@ -1,4 +1,4 @@
-package use_case.addBook;
+package use_case.add_book;
 
 public interface AddBookOutputBoundary {
     /**

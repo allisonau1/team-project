@@ -1,6 +1,4 @@
-package use_case.addBook;
-
-import entity.Book;
+package use_case.add_book;
 
 /**
  * Stores the input data required to add a book

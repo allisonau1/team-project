@@ -1,9 +1,7 @@
-package interface_adapter.addBook;
+package interface_adapter.add_book;
 
-import interface_adapter.ViewManagerModel;
-import interface_adapter.addBook.AddBookViewModel;
-import use_case.addBook.AddBookOutputBoundary;
-import use_case.addBook.AddBookOutputData;
+import use_case.add_book.AddBookOutputBoundary;
+import use_case.add_book.AddBookOutputData;
 
 /**
  *The Presenter for the add book use case.

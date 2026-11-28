@@ -1,6 +1,5 @@
-package use_case.addBook;
+package use_case.add_book;
 
-import entity.Book;
 import entity.Bookshelf;
 
 /**
