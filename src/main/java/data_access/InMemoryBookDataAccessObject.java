@@ -1,7 +1,7 @@
 package data_access;
 
 import entity.Book;
-import use_case.addBook.BookSearchDataAccessInterface;
+import use_case.add_book.BookSearchDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

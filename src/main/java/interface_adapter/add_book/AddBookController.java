@@ -1,7 +1,6 @@
-package interface_adapter.addBook;
-import entity.Book;
-import use_case.addBook.AddBookInputBoundary;
-import use_case.addBook.AddBookInputData;
+package interface_adapter.add_book;
+import use_case.add_book.AddBookInputBoundary;
+import use_case.add_book.AddBookInputData;
 
 /**
  * The controller for the Add Book use case.

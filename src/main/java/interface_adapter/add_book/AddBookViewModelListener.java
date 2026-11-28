@@ -1,4 +1,4 @@
-package interface_adapter.addBook;
+package interface_adapter.add_book;
 
 public interface AddBookViewModelListener {
 

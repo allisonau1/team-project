@@ -1,6 +1,6 @@
 package view;
 
-import interface_adapter.addBook.*;
+import interface_adapter.add_book.*;
 import interface_adapter.book_details.BookViewModel;
 import interface_adapter.book_details.BookViewModelListener;
 import interface_adapter.book_details.BookViewState;

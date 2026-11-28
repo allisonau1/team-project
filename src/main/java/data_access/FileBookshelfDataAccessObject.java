@@ -5,7 +5,7 @@ import entity.Bookshelf;
 import entity.Review;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import use_case.addBook.BookshelfDataAccessInterface;
+import use_case.add_book.BookshelfDataAccessInterface;
 import use_case.rate_review.RateReviewDataAccessInterface;
 import use_case.removeBook.RemoveBookDataAccessInterface;
 import use_case.sort_bookshelf.SortBookshelfDataAccessInterface;

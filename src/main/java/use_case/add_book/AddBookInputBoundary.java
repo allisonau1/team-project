@@ -1,4 +1,4 @@
-package use_case.addBook;
+package use_case.add_book;
 
 /**
  * Input Boundary for actions related to Adding a book to bookshelf

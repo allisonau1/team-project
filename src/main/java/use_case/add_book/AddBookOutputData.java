@@ -1,4 +1,4 @@
-package use_case.addBook;
+package use_case.add_book;
 
 /**
  * Stores the output data produced after successfully
