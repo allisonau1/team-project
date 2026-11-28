@@ -18,7 +18,7 @@ public class RateReviewInputData {
      *
      * @return the review text
      */
-    String getReview() {
+    public String getReview() {
         return review;
     }
 
@@ -27,7 +27,7 @@ public class RateReviewInputData {
      *
      * @return the rating
      */
-    Integer getRating() {
+    public Integer getRating() {
         return rating;
     }
 
@@ -36,5 +36,5 @@ public class RateReviewInputData {
      *
      * @return the Open Library ID
      */
-    String getOpenLibraryID() {return openLibraryID;}
+    public String getOpenLibraryID() {return openLibraryID;}
 }
