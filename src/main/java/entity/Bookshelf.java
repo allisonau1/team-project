@@ -44,7 +44,7 @@ public class Bookshelf {
      * @param book the book to be removed from the bookshelf
      */
     public void removeBook(Book book){
-
+        books.remove(book);
     }
 
     /**
