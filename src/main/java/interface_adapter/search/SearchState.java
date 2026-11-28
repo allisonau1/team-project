@@ -1,7 +1,5 @@
 package interface_adapter.search;
 
-import entity.Book;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

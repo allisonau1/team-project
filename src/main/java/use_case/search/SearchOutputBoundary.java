@@ -1,10 +1,5 @@
 package use_case.search;
 
-import entity.Book;
-
-import java.util.List;
-import java.util.Map;
-
 /**
  * The output boundary for the Search Use Case.
  */

@@ -1,6 +1,5 @@
 package interface_adapter.search;
 
-import entity.Book;
 import interface_adapter.ViewManagerModel;
 import use_case.search.SearchOutputBoundary;
 import use_case.search.SearchOutputData;
