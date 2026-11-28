@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import use_case.addBook.BookshelfDataAccessInterface;
 import use_case.removeBook.RemoveBookDataAccessInterface;
+import use_case.sort_bookshelf.SortBookshelfDataAccessInterface;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
  * Books that were only searched stay in {@link InMemoryBookDataAccessObject}.
  */
 public class FileBookshelfDataAccessObject
-        implements BookshelfDataAccessInterface, RemoveBookDataAccessInterface {
+        implements BookshelfDataAccessInterface, RemoveBookDataAccessInterface, SortBookshelfDataAccessInterface {
     private static final String OPEN_LIBRARY_ID = "openLibraryId";
     private static final String TITLE = "title";
     private static final String AUTHOR = "author";
@@ -42,6 +43,7 @@ public class FileBookshelfDataAccessObject
     /**
      * Constructs this DAO and loads the bookshelf saved in the file.
      * If the file does not exist, the bookshelf starts empty and the file is created on the first save.
+     *
      * @param filePath the path of the JSON file to read from and write to
      * @throws IOException if the file exists but cannot be read
      */
@@ -54,6 +56,7 @@ public class FileBookshelfDataAccessObject
 
     /**
      * Returns the user's bookshelf.
+     *
      * @return the bookshelf, containing every saved book in the order they were added
      */
     @Override
@@ -63,6 +66,7 @@ public class FileBookshelfDataAccessObject
 
     /**
      * Checks whether a book with the same OpenLibraryID is on the bookshelf.
+     *
      * @param openLibraryId the OpenLibraryID of the book
      * @return true if the book is on the bookshelf, false otherwise
      */
@@ -73,6 +77,7 @@ public class FileBookshelfDataAccessObject
 
     /**
      * Saves the bookshelf and writes it to the file.
+     *
      * @param bookshelf the bookshelf to save
      */
     @Override
@@ -83,6 +88,7 @@ public class FileBookshelfDataAccessObject
 
     /**
      * Returns the book on the bookshelf with the given OpenLibraryID.
+     *
      * @param openLibraryId the OpenLibraryID of the book
      * @return the book, or null if it is not on the bookshelf
      */
@@ -98,6 +104,7 @@ public class FileBookshelfDataAccessObject
 
     /**
      * Reads the bookshelf from the file.
+     *
      * @throws IOException if the file cannot be read
      */
     private void load() throws IOException {
@@ -116,6 +123,7 @@ public class FileBookshelfDataAccessObject
 
     /**
      * Writes every book on the bookshelf to the file, overwriting its previous contents.
+     *
      * @throws RuntimeException if the file cannot be written
      */
     private void writeToFile() {
@@ -133,6 +141,7 @@ public class FileBookshelfDataAccessObject
     /**
      * Converts a book to a JSON object. Null fields are stored as JSON null,
      * since org.json drops keys whose value is Java null.
+     *
      * @param book the book to convert
      * @return the JSON representation of the book
      */
@@ -159,6 +168,7 @@ public class FileBookshelfDataAccessObject
      * Missing or null fields become null, except shelved, which defaults to false.
      * OpenLibraryID is required.
      * A review is only created if a rating was saved, since every review has a rating.
+     *
      * @param json the JSON object to convert
      * @return the book represented by the JSON object
      */
@@ -186,6 +196,7 @@ public class FileBookshelfDataAccessObject
 
     /**
      * Returns the value, or JSONObject.NULL if the value is null.
+     *
      * @param value the value to store
      * @return the value or JSONObject.NULL
      */
@@ -195,8 +206,9 @@ public class FileBookshelfDataAccessObject
 
     /**
      * Returns the string stored under the key, or null if it is missing or JSON null.
+     *
      * @param json the JSON object to read from
-     * @param key the key to read
+     * @param key  the key to read
      * @return the string, or null
      */
     private static String stringOrNull(JSONObject json, String key) {
@@ -205,8 +217,9 @@ public class FileBookshelfDataAccessObject
 
     /**
      * Returns the integer stored under the key, or null if it is missing or JSON null.
+     *
      * @param json the JSON object to read from
-     * @param key the key to read
+     * @param key  the key to read
      * @return the integer, or null
      */
     private static Integer intOrNull(JSONObject json, String key) {
