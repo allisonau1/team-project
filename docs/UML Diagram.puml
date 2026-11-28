@@ -9,7 +9,6 @@ package entity {
     + getBooks() : ArrayList<Book>
     + addBook(book : Book) : void
     + removeBook(book : Book) : void
-    + sortBooks(comparator : Comparator<Book>) : void
   }
 
   class Book {
