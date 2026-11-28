@@ -1,7 +1,6 @@
 package entity;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * Represents a user's personal bookshelf, which maintains a collection
@@ -46,14 +45,4 @@ public class Bookshelf {
     public void removeBook(Book book){
         books.remove(book);
     }
-
-    /**
-     * Sorts the bookshelf by a certain comparator.
-     *
-     * @param compareBy the comparator to sort the list by
-     */
-    public void sortBooks(Comparator compareBy){
-
-    }
-
 }
