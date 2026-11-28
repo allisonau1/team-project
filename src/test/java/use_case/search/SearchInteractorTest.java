@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,7 +22,7 @@ public class SearchInteractorTest {
         );
         List<Book> expectedResult = List.of(book);
         List<String> receivedQueries = new ArrayList<>();
-        List<Book> presentedResults = new ArrayList<>();
+        List<Map<String, Object>> presentedResults = new ArrayList<>();
 
         SearchDataAccessInterface fakeDao = query -> {
             receivedQueries.add(query);
@@ -30,7 +31,7 @@ public class SearchInteractorTest {
 
         SearchOutputBoundary fakePresenter = new SearchOutputBoundary() {
             @Override
-            public void prepareSuccessView(List<Book> result) {
+            public void prepareSuccessView(List<Map<String, Object>> result) {
                 presentedResults.addAll(result);
             }
             @Override

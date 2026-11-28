@@ -1,13 +1,16 @@
 package use_case.search;
 
-public class SearchOutputData {
-    private final String result;
+import java.util.List;
+import java.util.Map;
 
-    public SearchOutputData(String result) {
+public class SearchOutputData {
+    private final List<Map<String, Object>> result;
+
+    public SearchOutputData(List<Map<String, Object>> result) {
         this.result = result;
     }
 
-    public String getResult(){
+    public List<Map<String, Object>> getResult(){
         return this.result;
     }
 }

@@ -6,6 +6,7 @@ import use_case.search.SearchOutputBoundary;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The Presenter for the Search Use Case.
@@ -21,21 +22,10 @@ public class SearchPresenter implements SearchOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(List<Book> response) {
+    public void prepareSuccessView(List<Map<String, Object>> response) {
         final SearchState searchState = searchViewModel.getState();
-        List<String> titles = new ArrayList<>();
-        List<String> authors = new ArrayList<>();
-        List<Integer> coverIds = new ArrayList<>();
-        List<String> openLibraryIds = new ArrayList<>();
 
-        for (Book book : response) {
-            titles.add(book.getTitle());
-            authors.add(book.getAuthor());
-            coverIds.add(book.getCoverID());
-            openLibraryIds.add(book.getOpenLibraryId());
-        }
-
-        searchState.setResult(titles, authors, coverIds, openLibraryIds);
+        searchState.setResult(response);
         searchViewModel.notifyStateChanged();
 
         viewManagerModel.setState(SearchViewModel.VIEW_NAME);
