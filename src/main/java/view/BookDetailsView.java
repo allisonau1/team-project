@@ -1,9 +1,6 @@
 package view;
 
-import interface_adapter.addBook.AddBookController;
-import interface_adapter.addBook.AddBookState;
-import interface_adapter.addBook.AddBookViewModel;
-import interface_adapter.addBook.BookViewModelListener;
+import interface_adapter.addBook.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,7 +14,7 @@ import java.net.URL;
  */
 public class BookDetailsView extends JPanel implements BookViewModelListener {
 
-    private final AddBookViewModel viewModel;
+    private final BookViewModel viewModel;
     private AddBookController addBookController;
 
     private final CoverPanel coverPanel = new CoverPanel();
@@ -31,7 +28,7 @@ public class BookDetailsView extends JPanel implements BookViewModelListener {
 
     private Integer shownCoverId;
 
-    public BookDetailsView(AddBookViewModel viewModel) {
+    public BookDetailsView(BookViewModel viewModel) {
         this.viewModel = viewModel;
         this.viewModel.addListener(this);
 
@@ -44,7 +41,7 @@ public class BookDetailsView extends JPanel implements BookViewModelListener {
         // Add the selected book to the bookshelf.
         addButton.addActionListener(evt -> {
             if (addBookController != null) {
-                final AddBookState state = viewModel.getState();
+                final BookViewState state = viewModel.getState();
                 addBookController.execute(state.getOpenLibraryID());
             }
         });
@@ -62,7 +59,7 @@ public class BookDetailsView extends JPanel implements BookViewModelListener {
      */
     @Override
     public void shelvedBookChanged() {
-        final AddBookState state = viewModel.getState();
+        final BookViewState state = viewModel.getState();
 
         titleLabel.setText(
                 state.getTitle().isEmpty() ? "Book Title" : state.getTitle());

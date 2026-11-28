@@ -1,11 +1,6 @@
 package interface_adapter.addBook;
 
-import entity.Book;
-import interface_adapter.rate_review.ShelvedBookState;
-
-import java.util.Map;
-
-public class AddBookState {
+public class BookViewState {
     private String openLibraryID = "";
     private String title = "";
     private String author = "";

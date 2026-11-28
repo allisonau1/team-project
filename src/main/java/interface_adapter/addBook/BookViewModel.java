@@ -1,20 +1,17 @@
 package interface_adapter.addBook;
 
-import interface_adapter.addBook.AddBookState;
-import interface_adapter.addBook.BookViewModelListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class  AddBookViewModel {
+public class BookViewModel {
     private final List<BookViewModelListener> listeners = new ArrayList<>();
-    private AddBookState state = new AddBookState();
+    private BookViewState state = new BookViewState();
 
-    public AddBookState getState() {
+    public BookViewState getState() {
         return this.state;
     }
 
-    public void setState(AddBookState state) {
+    public void setState(BookViewState state) {
         this.state = state;
     }
 
@@ -33,5 +30,23 @@ public class  AddBookViewModel {
         for (BookViewModelListener listener : listeners) {
             listener.shelvedBookChanged();
         }
+    }
+
+    public void setSelectedBook(
+            String openLibraryID,
+            String title,
+            String author,
+            String isbn,
+            String publicationYear,
+            Integer coverID) {
+
+        state.setOpenLibraryID(openLibraryID);
+        state.setTitle(title);
+        state.setAuthor(author);
+        state.setIsbn(isbn);
+        state.setPublicationYear(publicationYear);
+        state.setCoverID(coverID);
+
+        notifyStateChanged();
     }
 }
