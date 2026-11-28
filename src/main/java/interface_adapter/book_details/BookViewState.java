@@ -1,4 +1,4 @@
-package interface_adapter.addBook;
+package interface_adapter.book_details;
 
 public class BookViewState {
     private String openLibraryID = "";

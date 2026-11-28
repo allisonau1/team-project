@@ -1,4 +1,4 @@
-package interface_adapter.addBook;
+package interface_adapter.book_details;
 
 import java.util.ArrayList;
 import java.util.List;

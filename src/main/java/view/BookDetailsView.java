@@ -1,6 +1,9 @@
 package view;
 
 import interface_adapter.addBook.*;
+import interface_adapter.book_details.BookViewModel;
+import interface_adapter.book_details.BookViewModelListener;
+import interface_adapter.book_details.BookViewState;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,9 +15,10 @@ import java.net.URL;
  * Swing view displaying the details of a selected book.
  * Allows the user to add the selected book to their bookshelf.
  */
-public class BookDetailsView extends JPanel implements BookViewModelListener {
+public class BookDetailsView extends JPanel implements BookViewModelListener, AddBookViewModelListener{
 
     private final BookViewModel viewModel;
+    private final AddBookViewModel addBookViewModel;
     private AddBookController addBookController;
 
     private final CoverPanel coverPanel = new CoverPanel();
@@ -28,9 +32,11 @@ public class BookDetailsView extends JPanel implements BookViewModelListener {
 
     private Integer shownCoverId;
 
-    public BookDetailsView(BookViewModel viewModel) {
+    public BookDetailsView(BookViewModel viewModel, AddBookViewModel addBookViewModel) {
         this.viewModel = viewModel;
+        this.addBookViewModel = addBookViewModel;
         this.viewModel.addListener(this);
+        this.addBookViewModel.addListener(this);
 
         setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
@@ -51,7 +57,7 @@ public class BookDetailsView extends JPanel implements BookViewModelListener {
         this.addBookController = controller;
     }
 
-    // VIEW MODEL LISTENER
+    // VIEW MODEL LISTENERS
 
     /**
      * Called by the view model whenever its state changes.
@@ -87,6 +93,17 @@ public class BookDetailsView extends JPanel implements BookViewModelListener {
             statusLabel.setText(
                     state.getMessage().isEmpty() ? " " : state.getMessage());
         }
+    }
+
+    /**
+     * Called by the add book view model whenever its state changes.
+     * Updates the success or error message
+     */
+    @Override
+    public void addBookStateChanged() {
+        AddBookState state = addBookViewModel.getState();
+
+        statusLabel.setText(state.getMessage());
     }
 
     // LAYOUT
