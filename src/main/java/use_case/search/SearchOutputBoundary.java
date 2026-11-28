@@ -6,9 +6,9 @@ package use_case.search;
 public interface SearchOutputBoundary {
     /**
      * Prepares the success view for the Search Use Case.
-     * @param response for the output data
+     * @param searchOutputData for the output data
      */
-    void prepareSuccessView(String response);
+    void prepareSuccessView(SearchOutputData searchOutputData);
     /**
      * Prepares the failure view for the Search Use Case.
      * @param error the explanation of the failure

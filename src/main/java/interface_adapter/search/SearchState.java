@@ -1,40 +1,69 @@
 package interface_adapter.search;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * The state for the Search View Model.
  */
 public class SearchState {
-    private String query = "";
-    private String queryError;
-    private String result = "";
     private String resultError;
-
-    public String getQuery() {
-        return query;
-    }
-
-    public String getQueryError() {
-        return queryError;
-    }
-
-    public String getResult() {
-        return result;
-    }
+    private List<String> titles = List.of();
+    private List<String> authors = List.of();
+    private List<Integer> coverIds = List.of();
+    private List<String> openLibraryIds = List.of();
+    private List<String> isbns = List.of();
+    private List<Integer> publicationYears = List.of();
 
     public String getResultError() {
         return resultError;
     }
 
-    public void setQuery(String query) {
-        this.query = query;
+    public void setResult(List<Map<String, Object>> results) {
+        int size = titles.size();
+        if (authors.size() != size || coverIds.size() != size || openLibraryIds.size() != size) {
+            throw new IllegalArgumentException("Search result lists must have the same size.");
+        }
+        for (Map<String, Object> result : results) {
+            titles.add((String) result.get("title"));
+            authors.add((String) result.get("author"));
+            coverIds.add((Integer) result.get("coverID"));
+            openLibraryIds.add((String) result.get("openLibraryId"));
+            isbns.add((String) result.get("isbn"));
+            publicationYears.add((Integer) result.get("publicationYear"));
+        }
+
+        this.titles = new ArrayList<>(titles);
+        this.authors = new ArrayList<>(authors);
+        this.coverIds = new ArrayList<>(coverIds);
+        this.openLibraryIds = new ArrayList<>(openLibraryIds);
+        this.isbns = new ArrayList<>(isbns);
+        this.publicationYears = new ArrayList<>(publicationYears);
     }
 
-    public void setQueryError(String queryError) {
-        this.queryError = queryError;
+    public List<String> getTitles() {
+        return titles;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public List<String> getAuthors() {
+        return authors;
+    }
+
+    public List<Integer> getCoverIds() {
+        return coverIds;
+    }
+
+    public List<String> getOpenLibraryIds() {
+        return openLibraryIds;
+    }
+
+    public List<String> getIsbns() {
+        return isbns;
+    }
+
+    public List<Integer> getPublicationYears() {
+        return publicationYears;
     }
 
     public void setResultError(String resultError) {
@@ -43,9 +72,12 @@ public class SearchState {
 
     @Override
     public String toString() {
-        return "SearchState{"
-                + "query='" + query + '\''
-                + ", result='" + result + '\''
-                + '}';
+        return "SearchState{" +
+                "titles=" + titles +
+                ", authors=" + authors +
+                ", coverIds=" + coverIds +
+                ", openLibraryIds=" + openLibraryIds +
+                ", resultError=" + resultError +
+                '}';
     }
 }

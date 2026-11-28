@@ -2,6 +2,11 @@ package interface_adapter.search;
 
 import interface_adapter.ViewManagerModel;
 import use_case.search.SearchOutputBoundary;
+import use_case.search.SearchOutputData;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Presenter for the Search Use Case.
@@ -17,9 +22,10 @@ public class SearchPresenter implements SearchOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(String response) {
+    public void prepareSuccessView(SearchOutputData searchOutputData) {
         final SearchState searchState = searchViewModel.getState();
-        searchState.setResult(response);
+
+        searchState.setResult(searchOutputData.getResult());
         searchViewModel.notifyStateChanged();
 
         viewManagerModel.setState(SearchViewModel.VIEW_NAME);

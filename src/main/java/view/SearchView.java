@@ -1,7 +1,7 @@
 package view;
 
-import entity.Book;
 import interface_adapter.search.SearchController;
+import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.search.SearchViewModelListener;
 import java.util.List;
@@ -57,21 +57,21 @@ public class SearchView extends JPanel implements ActionListener, SearchViewMode
 
     @Override
     public void stateChanged() {
-        List<Book> books = searchViewModel.getState().getResult();
-        showResults(books);
-        searchErrorField.setText(searchViewModel.getState().getResultError());
+        SearchState state = searchViewModel.getState();
+        showResults(state);
+        searchErrorField.setText(state.getResultError());
     }
 
     public void setSearchController(SearchController searchController) {
         this.searchController = searchController;
     }
 
-    private void showResults(List<Book> books) {
+    private void showResults(SearchState state) {
         resultsPanel.removeAll();
 
-        for (Book book : books) {
-            JButton button = new JButton(book.getTitle());
-            button.addActionListener();
+        List<String> titles = state.getTitles();
+        for (int i = 0; i < titles.size(); i++) {
+            JButton button = new JButton(titles.get(i));
             resultsPanel.add(button);
         }
 
