@@ -1,7 +1,6 @@
 package interface_adapter.addBook;
 
-import interface_adapter.ViewManagerModel;
-import interface_adapter.addBook.AddBookViewModel;
+import interface_adapter.book_details.BookViewModel;
 import use_case.addBook.AddBookOutputBoundary;
 import use_case.addBook.AddBookOutputData;
 
